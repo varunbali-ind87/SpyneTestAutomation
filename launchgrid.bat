@@ -1,0 +1,1 @@
+java -jar "C:\Users\vrnba\Documents\Workspace\SpyneTestAutomation\src\main\resources\selenium-server-4.24.0.jar" standalone --selenium-manager true

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite">
+    <listeners>
+        <listener class-name="org.spyne.listener.AutomationListener"/>
+    </listeners>
+    <test name="Website load Test">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="org.spyne.tests.SiteLoadTest"/>
+        </classes>
+    </test> <!-- Test -->
+    <test name="Valid File Upload Test">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="org.spyne.tests.FileUploadTest"/>
+        </classes>
+    </test> <!-- Test -->
+    <test name="Invalid File Upload Test">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="org.spyne.tests.FileDownloadTest"/>
+        </classes>
+    </test> <!-- Test -->
+    <test name="File Download Test">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="org.spyne.tests.FileDownloadTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
