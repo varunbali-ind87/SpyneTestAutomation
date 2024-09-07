@@ -1,6 +1,6 @@
 package org.spyne.tests;
 
-import org.apache.commons.lang3.StringUtils;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -66,26 +66,44 @@ public class FileDownloadTest
             }
         });
 
+        ExtentTestManager.getTest().log(Status.PASS, "Uploaded image.");
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='__next']/div[2]/div[2]/div/div[2]/div/div[2]/div/div[2]/img")));
         wait.until(ExpectedConditions.elementToBeClickable(PROCESS)).click();
+        ExtentTestManager.getTest().log(Status.PASS, "Clicked Process button.");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[text() = 'Continue with Email']"))).click();
+        ExtentTestManager.getTest().log(Status.PASS, "Clicked Continue.");
         String randomEmailAddress = InboxUtils.createInbox();
+        ExtentTestManager.getTest().log(Status.PASS, "Inbox successfully created.");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name = 'emailId']"))).sendKeys(randomEmailAddress);
+        ExtentTestManager.getTest().log(Status.PASS, "Entered " + randomEmailAddress);
         wait.until(ExpectedConditions.elementToBeClickable(By.id("next"))).click();
+        ExtentTestManager.getTest().log(Status.PASS, "Submitted " + randomEmailAddress);
+
+        String otp = InboxUtils.getOTP();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name = 'otp']"))).sendKeys(otp);
+        ExtentTestManager.getTest().log(Status.PASS, "Entered " + otp);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text() = 'Verify']"))).click();
+        ExtentTestManager.getTest().log(Status.PASS, "Clicked Verify button.");
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name = 'owner_name']"))).sendKeys("Varun");
+        ExtentTestManager.getTest().log(Status.PASS, "Entered owner name.");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()= 'Continue']"))).click();
+        ExtentTestManager.getTest().log(Status.PASS, "Clicked Continue.");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text() = 'Your account has been created']")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[text() = 'You’ve got Free Credits!']")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@id='free-credits-modal']/div[2]/div")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//h1[text() = 'You’ve got Free Credits!']")));
+        ExtentTestManager.getTest().log(Status.PASS, "Verified free account creation.");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='__next']/div[2]/div[2]/div/div[2]/div/div[2]/div/div[1]/div/button[contains(text(), 'Download')]"))).click();
-        String fileExtension = StringUtils.substringAfter(IMAGE_TO_UPSCALE, ".");
-        String downloadedFilePath = FolderUtils.getDownloadedFilePath(FolderUtils.getTempDownloadDirectory(), fileExtension);
+        ExtentTestManager.getTest().log(Status.PASS, "Clicked Download.");
+        String downloadedFilePath = FolderUtils.getDownloadedFilePath(FolderUtils.tempDownloadDirectory, "jpeg");
 
         int downloadedImageWidth = ImageUtils.getImageWidth(downloadedFilePath);
         int downloadedImageHeight = ImageUtils.getImageHeight(downloadedFilePath);
         Assert.assertEquals(downloadedImageWidth, inputImageWidth * 4);
         Assert.assertEquals(downloadedImageHeight, inputImageHeight * 4);
+        ExtentTestManager.getTest().log(Status.PASS, "Image successfully upscaled to 4 times the original resolution.");
 
         ExtentReportManager.reporter.flush();
     }

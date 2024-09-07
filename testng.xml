@@ -19,7 +19,7 @@
     <test name="Invalid File Upload Test">
         <parameter name="browser" value="Chrome"/>
         <classes>
-            <class name="org.spyne.tests.FileDownloadTest"/>
+            <class name="org.spyne.tests.InvalidFileTest"/>
         </classes>
     </test> <!-- Test -->
     <test name="File Download Test">

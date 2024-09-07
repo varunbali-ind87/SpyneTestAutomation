@@ -27,7 +27,7 @@ public class WebDriverManager
             chromeOptions.setCapability("browserName", "chrome");
             // Set download directory
             Map<String, Object> prefs = new HashMap<>();
-            prefs.put("download.default_directory", FolderUtils.getTempDownloadDirectory());
+            prefs.put("download.default_directory", FolderUtils.createTempDownloadDirectory());
             prefs.put("download.prompt_for_download", false);
             prefs.put("download.directory_upgrade", true);
 

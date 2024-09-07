@@ -8,33 +8,38 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 public class FolderUtils
 {
+    public static String tempDownloadDirectory;
+
     private FolderUtils()
     {
     }
 
-    public static String getTempDownloadDirectory() throws IOException
+    public static String createTempDownloadDirectory() throws IOException
     {
         var simpleFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         var date = new Date();
         var folderName = simpleFormat.format(date);
         var downloadPath = Paths.get(System.getProperty("java.io.tmpdir"), folderName);
         FileUtils.forceMkdir(new File(downloadPath.toString()));
-        return downloadPath.toString();
+        tempDownloadDirectory = downloadPath.toString();
+        return tempDownloadDirectory;
     }
 
     public static String getDownloadedFilePath(final String filePath, final String extension)
     {
         Awaitility.await().atMost(Duration.ofSeconds(10)).until(() ->
         {
-            // Get the list of all the files residing the parent directory
-            var listOfFiles = FileUtils.listFiles(new File(filePath), new String[] {extension}, true);
-            return listOfFiles.isEmpty();
+            var directoryPath = new File(filePath);
+            File[] file = directoryPath.listFiles();
+            return file != null && file.length > 0;
         });
 
-        return FileUtils.listFiles(new File(filePath), new String[] {extension}, true).stream().toList().getFirst().getAbsolutePath();
+        return Arrays.stream(Objects.requireNonNull(new File(filePath).listFiles())).toList().getFirst().getAbsolutePath();
     }
 }
