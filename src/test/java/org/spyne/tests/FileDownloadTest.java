@@ -84,8 +84,8 @@ public class FileDownloadTest
 
         int downloadedImageWidth = ImageUtils.getImageWidth(downloadedFilePath);
         int downloadedImageHeight = ImageUtils.getImageHeight(downloadedFilePath);
-        Assert.assertEquals(downloadedImageWidth, inputImageWidth * 2);
-        Assert.assertEquals(downloadedImageHeight, inputImageHeight * 2);
+        Assert.assertEquals(downloadedImageWidth, inputImageWidth * 4);
+        Assert.assertEquals(downloadedImageHeight, inputImageHeight * 4);
 
         ExtentReportManager.reporter.flush();
     }
