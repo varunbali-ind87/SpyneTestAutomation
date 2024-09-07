@@ -9,7 +9,7 @@ public class ExtentReportManager
 
     public static ExtentReports createExtentReport()
     {
-        var sparkReporter = new ExtentSparkReporter("target/Spark.html");
+        var sparkReporter = new ExtentSparkReporter("target/SpyneAutomationReport.html");
         reporter.attachReporter(sparkReporter);
         return reporter;
     }

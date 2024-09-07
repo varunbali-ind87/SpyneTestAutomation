@@ -5,7 +5,7 @@
         <listener class-name="org.spyne.listener.AutomationListener"/>
     </listeners>
     <test name="Website load Test">
-        <parameter name="browser" value="Chrome"/>
+        <parameter name="browser" value="edge"/>
         <classes>
             <class name="org.spyne.tests.SiteLoadTest"/>
         </classes>

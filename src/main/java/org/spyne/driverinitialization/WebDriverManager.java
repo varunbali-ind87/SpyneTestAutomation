@@ -2,7 +2,9 @@ package org.spyne.driverinitialization;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.spyne.utilities.FolderUtils;
 
@@ -30,9 +32,7 @@ public class WebDriverManager
             prefs.put("download.default_directory", FolderUtils.createTempDownloadDirectory());
             prefs.put("download.prompt_for_download", false);
             prefs.put("download.directory_upgrade", true);
-
             chromeOptions.setExperimentalOption("prefs", prefs);
-
             driver = new RemoteWebDriver(new URI(URL).toURL(), chromeOptions);
             threadDriver.set(driver);
             return driver;
@@ -41,6 +41,21 @@ public class WebDriverManager
         {
             var firefoxOptions = new FirefoxOptions();
             driver = new RemoteWebDriver(new URI(URL).toURL(), firefoxOptions);
+            threadDriver.set(driver);
+            return driver;
+        }
+        else if (browser.equalsIgnoreCase("edge"))
+        {
+            var edgeOptions = new EdgeOptions();
+            // Set download directory
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("download.default_directory", FolderUtils.createTempDownloadDirectory());
+            prefs.put("download.prompt_for_download", false);
+            prefs.put("download.directory_upgrade", true);
+            edgeOptions.setExperimentalOption("prefs", prefs);
+            var capabilities = new DesiredCapabilities();
+            capabilities.setCapability(EdgeOptions.CAPABILITY, edgeOptions);
+            driver = new RemoteWebDriver(new URI(URL).toURL(), capabilities);
             threadDriver.set(driver);
             return driver;
         }
